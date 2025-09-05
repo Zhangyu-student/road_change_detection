@@ -118,7 +118,6 @@ class Epoch:
                             self.check_tensor(y, True)
                 x1, x2, y = x1.to(self.device), x2.to(self.device), y.to(self.device)
                 loss, y_pred = self.batch_update(x1, x2, y)
-
                 # update loss logs
                 loss_value = loss.detach().cpu().numpy()
                 loss_meter.add(loss_value)
@@ -158,8 +157,6 @@ class TrainEpoch(Epoch):
     def batch_update(self, x1, x2, y):
         self.optimizer.zero_grad()
         prediction = self.model.forward(x1, x2)
-        print(f"predection: {prediction.shape}, y: {y.shape}")
-
         loss = self.loss(prediction, y)
         loss.backward()
         self.optimizer.step()

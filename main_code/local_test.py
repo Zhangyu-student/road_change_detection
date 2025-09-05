@@ -63,8 +63,8 @@ valid_dataset = LEVIR_CD_Dataset(r'F:\BaiduNetdiskDownload\road_detection\Wuhan\
 train_loader = DataLoader(train_dataset, batch_size=8, shuffle=True, num_workers=0)
 valid_loader = DataLoader(valid_dataset, batch_size=1, shuffle=False, num_workers=0)
 
-loss = cdp.utils.losses.CrossEntropyLoss()
-
+# loss = cdp.utils.losses.CrossEntropyLoss()
+loss = cdp.utils.losses.BCEWithLogitsLoss()
 metrics = [
     cdp.utils.metrics.Fscore(activation='argmax2d'),
     cdp.utils.metrics.Precision(activation='argmax2d'),
