@@ -54,6 +54,7 @@ class LEVIR_CD_Dataset(CustomDataset):
             img1, img2, ann, filename = self.prepare_img_ann(idx)
             transformed_data = self.transform(image=img1, image_2=img2, mask=ann)
             img1, img2, ann = transformed_data['image'], transformed_data['image_2'], transformed_data['mask']
+            ann = ann.unsqueeze(0)
             return img1, img2, ann, filename
 
 

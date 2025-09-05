@@ -39,7 +39,9 @@ class Epoch:
     def check_tensor(self, data, is_label):
         if not is_label:
             return data if data.ndim <= 4 else data.squeeze()
-        return data.long() if data.ndim <= 3 else data.squeeze().long()
+
+        # return data.long() if data.ndim <= 3 else data.squeeze().long()
+        return data
 
     def infer_vis(self, dataloader, save=True, evaluate=False, slide=False, image_size=1024,
                   window_size=256, save_dir='./res', suffix='.tif'):
@@ -112,7 +114,6 @@ class Epoch:
 
         with tqdm(dataloader, desc=self.stage_name, file=sys.stdout, disable=not (self.verbose)) as iterator:
             for (x1, x2, y, filename) in iterator:
-
                 x1, x2, y = self.check_tensor(x1, False), self.check_tensor(x2, False), \
                             self.check_tensor(y, True)
                 x1, x2, y = x1.to(self.device), x2.to(self.device), y.to(self.device)
@@ -158,6 +159,7 @@ class TrainEpoch(Epoch):
         self.optimizer.zero_grad()
         prediction = self.model.forward(x1, x2)
         print(f"predection: {prediction.shape}, y: {y.shape}")
+
         loss = self.loss(prediction, y)
         loss.backward()
         self.optimizer.step()

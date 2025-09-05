@@ -45,18 +45,18 @@ print("初始模型复杂度:")
 print_model_complexity(model)
 print("=" * 50)
 
-train_dataset = LEVIR_CD_Dataset(r'F:\BaiduNetdiskDownload\road_detection\Wuhan\2012_2014',
+train_dataset = LEVIR_CD_Dataset(r'F:\BaiduNetdiskDownload\road_detection\Wuhan\2012_2014\train',
                                  sub_dir_1='A',
                                  sub_dir_2='B',
                                  img_suffix='.png',
-                                 ann_dir=r'F:\BaiduNetdiskDownload\road_detection\Wuhan\2012_2014/label',
+                                 ann_dir=r'F:\BaiduNetdiskDownload\road_detection\Wuhan\2012_2014\train\label',
                                  debug=False)
 
-valid_dataset = LEVIR_CD_Dataset('../LEVIR-CD/test',
+valid_dataset = LEVIR_CD_Dataset(r'F:\BaiduNetdiskDownload\road_detection\Wuhan\2012_2014\val',
                                  sub_dir_1='A',
                                  sub_dir_2='B',
                                  img_suffix='.png',
-                                 ann_dir='../LEVIR-CD/test/label',
+                                 ann_dir=r'F:\BaiduNetdiskDownload\road_detection\Wuhan\2012_2014\val\label',
                                  debug=False,
                                  test_mode=True)
 
@@ -64,6 +64,7 @@ train_loader = DataLoader(train_dataset, batch_size=8, shuffle=True, num_workers
 valid_loader = DataLoader(valid_dataset, batch_size=1, shuffle=False, num_workers=0)
 
 loss = cdp.utils.losses.CrossEntropyLoss()
+
 metrics = [
     cdp.utils.metrics.Fscore(activation='argmax2d'),
     cdp.utils.metrics.Precision(activation='argmax2d'),
